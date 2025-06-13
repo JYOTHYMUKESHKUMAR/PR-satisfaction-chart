@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Survey Results - Interactive Visualization</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .container {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 20px;
+            padding: 40px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+            max-width: 900px;
+            width: 100%;
+        }
+        
+        h1 {
+            text-align: center;
+            color: #333;
+            margin-bottom: 40px;
+            font-size: 2.2em;
+            font-weight: 300;
+        }
+        
+        .chart-container {
+            position: relative;
+            height: 600px;
+            margin: 20px 0;
+        }
+        
+        .data-point {
+            position: absolute;
+            display: flex;
+            align-items: center;
+            width: 100%;
+            height: 60px;
+            margin: 5px 0;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+        
+        .data-point:hover {
+            transform: translateX(10px);
+        }
+        
+        .category-label {
+            width: 280px;
+            font-size: 14px;
+            font-weight: 500;
+            color: #444;
+            padding-right: 20px;
+            text-align: right;
+        }
+        
+        .score-visual {
+            flex: 1;
+            height: 40px;
+            background: linear-gradient(90deg, #ff6b6b, #feca57, #48dbfb, #ff9ff3, #54a0ff);
+            border-radius: 25px;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        }
+        
+        .score-fill {
+            height: 100%;
+            border-radius: 25px;
+            background: linear-gradient(90deg, #4facfe 0%, #00f2fe 100%);
+            transition: width 1s ease-in-out;
+            position: relative;
+        }
+        
+        .score-text {
+            position: absolute;
+            right: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: white;
+            font-weight: bold;
+            font-size: 16px;
+            text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+        }
+        
+        .score-number {
+            margin-left: 20px;
+            font-size: 18px;
+            font-weight: bold;
+            color: #333;
+            min-width: 50px;
+        }
+        
+        .sparkle {
+            position: absolute;
+            width: 8px;
+            height: 8px;
+            background: rgba(255, 255, 255, 0.8);
+            border-radius: 50%;
+            animation: sparkle 2s ease-in-out infinite;
+        }
+        
+        @keyframes sparkle {
+            0%, 100% { opacity: 0; transform: scale(0.5); }
+            50% { opacity: 1; transform: scale(1.2); }
+        }
+        
+        .stats-summary {
+            display: flex;
+            justify-content: space-around;
+            margin-top: 40px;
+            padding: 20px;
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            border-radius: 15px;
+            color: white;
+        }
+        
+        .stat-item {
+            text-align: center;
+        }
+        
+        .stat-number {
+            font-size: 2em;
+            font-weight: bold;
+            display: block;
+        }
+        
+        .stat-label {
+            font-size: 0.9em;
+            opacity: 0.9;
+        }
+        
+        .pulse {
+            animation: pulse 2s ease-in-out infinite;
+        }
+        
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Survey Results Dashboard</h1>
+        
+        <div class="chart-container" id="chart">
+            <!-- Data points will be inserted here -->
+        </div>
+        
+        <div class="stats-summary">
+            <div class="stat-item">
+                <span class="stat-number">4.62</span>
+                <span class="stat-label">Average Score</span>
+            </div>
+            <div class="stat-item">
+                <span class="stat-number">9</span>
+                <span class="stat-label">Categories</span>
+            </div>
+            <div class="stat-item">
+                <span class="stat-number">92.4%</span>
+                <span class="stat-label">Satisfaction Rate</span>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const data = [
+            { category: "Ease of understanding visual feedback", score: 4.78 },
+            { category: "Improved confidence", score: 4.78 },
+            { category: "Overall satisfaction", score: 4.75 },
+            { category: "Clarity of data explanations", score: 4.67 },
+            { category: "Increased optimism", score: 4.67 },
+            { category: "Helpfulness of dashboard format", score: 4.56 },
+            { category: "Motivated to engage in rehab", score: 4.56 },
+            { category: "Reduced anxiety", score: 4.56 },
+            { category: "Encouraged goal setting", score: 4.22 }
+        ];
+
+        const colors = [
+            'linear-gradient(90deg, #ff6b6b 0%, #ee5a52 100%)',
+            'linear-gradient(90deg, #4ecdc4 0%, #44a08d 100%)',
+            'linear-gradient(90deg, #45b7d1 0%, #2196f3 100%)',
+            'linear-gradient(90deg, #f093fb 0%, #f5576c 100%)',
+            'linear-gradient(90deg, #4facfe 0%, #00f2fe 100%)',
+            'linear-gradient(90deg, #43e97b 0%, #38f9d7 100%)',
+            'linear-gradient(90deg, #fa709a 0%, #fee140 100%)',
+            'linear-gradient(90deg, #a8edea 0%, #fed6e3 100%)',
+            'linear-gradient(90deg, #ffecd2 0%, #fcb69f 100%)'
+        ];
+
+        function createChart() {
+            const chartContainer = document.getElementById('chart');
+            
+            data.forEach((item, index) => {
+                const dataPoint = document.createElement('div');
+                dataPoint.className = 'data-point';
+                dataPoint.style.top = `${index * 65}px`;
+                
+                const percentage = (item.score / 5) * 100;
+                
+                dataPoint.innerHTML = `
+                    <div class="category-label">${item.category}</div>
+                    <div class="score-visual">
+                        <div class="score-fill" style="width: 0%; background: ${colors[index]};">
+                            <div class="score-text">${item.score}</div>
+                            <div class="sparkle" style="left: ${Math.random() * 80 + 10}%; top: ${Math.random() * 60 + 20}%; animation-delay: ${Math.random() * 2}s;"></div>
+                            <div class="sparkle" style="left: ${Math.random() * 80 + 10}%; top: ${Math.random() * 60 + 20}%; animation-delay: ${Math.random() * 2}s;"></div>
+                        </div>
+                    </div>
+                    <div class="score-number">${item.score}</div>
+                `;
+                
+                chartContainer.appendChild(dataPoint);
+                
+                // Animate the fill
+                setTimeout(() => {
+                    const fill = dataPoint.querySelector('.score-fill');
+                    fill.style.width = `${percentage}%`;
+                }, index * 200);
+                
+                // Add hover effect
+                dataPoint.addEventListener('mouseenter', () => {
+                    dataPoint.classList.add('pulse');
+                });
+                
+                dataPoint.addEventListener('mouseleave', () => {
+                    dataPoint.classList.remove('pulse');
+                });
+            });
+        }
+
+        // Initialize the chart when the page loads
+        window.addEventListener('load', createChart);
+    </script>
+</body>
+</html>
