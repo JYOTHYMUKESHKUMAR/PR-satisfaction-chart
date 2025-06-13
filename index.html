@@ -39,56 +39,57 @@
         .chart-item {
             background: white;
             border-radius: 15px;
-            padding: 25px;
-            margin-bottom: 20px;
+            padding: 15px 20px;
+            margin-bottom: 8px;
             box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
             transition: all 0.3s ease;
             border-left: 5px solid transparent;
+            display: flex;
+            align-items: center;
+            gap: 20px;
         }
         
         .chart-item:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.12);
         }
         
-        .category-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 20px;
+        .category-label {
+            width: 280px;
+            font-size: 14px;
+            font-weight: 500;
+            color: #444;
+            text-align: left;
+            flex-shrink: 0;
         }
         
-        .category-title {
-            font-size: 16px;
-            font-weight: 600;
-            color: #333;
+        .bar-container {
             flex: 1;
+            display: flex;
+            align-items: center;
+            gap: 15px;
         }
         
         .average-score {
             background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
             color: white;
-            padding: 8px 16px;
-            border-radius: 20px;
+            padding: 5px 12px;
+            border-radius: 15px;
             font-weight: bold;
-            font-size: 18px;
-            min-width: 60px;
+            font-size: 15px;
+            min-width: 50px;
             text-align: center;
-            box-shadow: 0 3px 10px rgba(79, 172, 254, 0.3);
+            box-shadow: 0 2px 8px rgba(79, 172, 254, 0.3);
+            flex-shrink: 0;
         }
         
-        .distribution-container {
-            display: flex;
-            gap: 15px;
-            align-items: center;
-            margin-bottom: 15px;
-        }
+
         
         .rating-bar {
             flex: 1;
-            height: 40px;
+            height: 30px;
             background: #f0f0f0;
-            border-radius: 25px;
+            border-radius: 15px;
             overflow: hidden;
             position: relative;
         }
@@ -147,6 +148,7 @@
             color: #555;
             line-height: 1.5;
             border-left: 4px solid #667eea;
+            display: none;
         }
         
         .stats-grid {
@@ -199,19 +201,7 @@
             box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
         }
         
-        .category-rank {
-            background: #667eea;
-            color: white;
-            width: 30px;
-            height: 30px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-weight: bold;
-            margin-right: 15px;
-            font-size: 14px;
-        }
+
     </style>
 </head>
 <body>
@@ -265,64 +255,55 @@
                 rank: 1,
                 category: "Ease of Understanding Visual Feedback",
                 score: 4.78,
-                ratings: { 5: 78, 4: 22, 3: 0 },
-                interpretation: "High visual intuitiveness across the board, especially for those with limited mobility or recent strokes"
+                ratings: { 5: 78, 4: 22, 3: 0 }
             },
             {
                 rank: 2,
-                category: "Overall Satisfaction",
-                score: 4.78,
-                ratings: { 5: 78, 4: 22, 3: 0 },
-                interpretation: "Indicates high acceptability and emotional satisfaction with the interface"
+                category: "Clarity of Data Explanations",
+                score: 4.67,
+                ratings: { 5: 67, 4: 33, 3: 0 }
             },
             {
                 rank: 3,
-                category: "Clarity of Data Explanations",
+                category: "Helpfulness of Dashboard Format",
                 score: 4.67,
-                ratings: { 5: 67, 4: 33, 3: 0 },
-                interpretation: "Language and explanation style of metrics is working well. Possibly due to simplified terminologies or effective design"
+                ratings: { 5: 67, 4: 33, 3: 0 }
             },
             {
                 rank: 4,
-                category: "Helpfulness of Dashboard Format",
+                category: "Improved Confidence in Therapy Sessions",
                 score: 4.67,
-                ratings: { 5: 67, 4: 33, 3: 0 },
-                interpretation: "Format presentation (likely layout and structure) is aiding user comprehension"
+                ratings: { 5: 67, 4: 33, 3: 0 }
             },
             {
                 rank: 5,
-                category: "Improved Confidence in Therapy Sessions",
-                score: 4.67,
-                ratings: { 5: 67, 4: 33, 3: 0 },
-                interpretation: "Indicates dashboard may be reinforcing the value of therapy by providing feedback loops"
+                category: "Motivation to Engage in Rehabilitation",
+                score: 4.56,
+                ratings: { 5: 56, 4: 44, 3: 0 }
             },
             {
                 rank: 6,
-                category: "Motivation to Engage in Rehabilitation",
+                category: "Optimism about Recovery",
                 score: 4.56,
-                ratings: { 5: 56, 4: 44, 3: 0 },
-                interpretation: "Dashboard likely triggers intrinsic motivation by visualizing progress. May reflect strong engagement design"
+                ratings: { 5: 56, 4: 44, 3: 0 }
             },
             {
                 rank: 7,
-                category: "Optimism about Recovery",
+                category: "Reduced Anxiety about Rehabilitation",
                 score: 4.56,
-                ratings: { 5: 56, 4: 44, 3: 0 },
-                interpretation: "Visual progress might provide emotional reinforcement, especially in early recovery stages"
+                ratings: { 5: 56, 4: 44, 3: 0 }
             },
             {
                 rank: 8,
-                category: "Reduced Anxiety about Rehabilitation",
-                score: 4.56,
-                ratings: { 5: 56, 4: 44, 3: 0 },
-                interpretation: "Indicates calming effect of visualized performance data – reducing fear of the unknown"
+                category: "Encouragement for Goal Setting & Active Participation",
+                score: 4.44,
+                ratings: { 5: 56, 4: 33, 3: 11 }
             },
             {
                 rank: 9,
-                category: "Encouragement for Goal Setting & Active Participation",
-                score: 4.44,
-                ratings: { 5: 56, 4: 33, 3: 11 },
-                interpretation: "Slight deviation seen here – P8 scored lower; could indicate cognitive barriers or dissatisfaction with interactive features"
+                category: "Overall Satisfaction",
+                score: 4.78,
+                ratings: { 5: 78, 4: 22, 3: 0 }
             }
         ];
 
@@ -339,24 +320,14 @@
                 const rating3Width = item.ratings[3];
                 
                 chartItem.innerHTML = `
-                    <div class="category-header">
-                        <div style="display: flex; align-items: center;">
-                            <div class="category-rank">${item.rank}</div>
-                            <div class="category-title">${item.category}</div>
+                    <div class="category-label">${item.category}</div>
+                    <div class="bar-container">
+                        <div class="rating-bar">
+                            ${rating5Width > 0 ? `<div class="rating-segment rating-5" style="width: 0%; animation: fillAnimation 1s ease-in-out ${index * 0.1}s forwards;" data-width="${rating5Width}%">${rating5Width}%</div>` : ''}
+                            ${rating4Width > 0 ? `<div class="rating-segment rating-4" style="width: 0%; animation: fillAnimation 1s ease-in-out ${index * 0.1 + 0.2}s forwards;" data-width="${rating4Width}%">${rating4Width}%</div>` : ''}
+                            ${rating3Width > 0 ? `<div class="rating-segment rating-3" style="width: 0%; animation: fillAnimation 1s ease-in-out ${index * 0.1 + 0.4}s forwards;" data-width="${rating3Width}%">${rating3Width}%</div>` : ''}
                         </div>
                         <div class="average-score">${item.score}</div>
-                    </div>
-                    
-                    <div class="distribution-container">
-                        <div class="rating-bar">
-                            ${rating5Width > 0 ? `<div class="rating-segment rating-5" style="width: 0%; animation: fillAnimation 1s ease-in-out ${index * 0.2}s forwards;" data-width="${rating5Width}%">${rating5Width}%</div>` : ''}
-                            ${rating4Width > 0 ? `<div class="rating-segment rating-4" style="width: 0%; animation: fillAnimation 1s ease-in-out ${index * 0.2 + 0.3}s forwards;" data-width="${rating4Width}%">${rating4Width}%</div>` : ''}
-                            ${rating3Width > 0 ? `<div class="rating-segment rating-3" style="width: 0%; animation: fillAnimation 1s ease-in-out ${index * 0.2 + 0.6}s forwards;" data-width="${rating3Width}%">${rating3Width}%</div>` : ''}
-                        </div>
-                    </div>
-                    
-                    <div class="interpretation">
-                        <strong>Insight:</strong> ${item.interpretation}
                     </div>
                 `;
                 
